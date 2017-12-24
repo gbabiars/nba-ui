@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Header from "./Header";
+import Teams from "./Teams";
 
 const Home = () => <h1>Home</h1>;
-
-const Teams = () => <h1>Teams</h1>;
 
 const Players = () => <h1>Players</h1>;
 
