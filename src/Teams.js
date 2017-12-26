@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import sortBy from "lodash/sortBy";
 
 const conferences = [{ id: "1", name: "East" }, { id: "2", name: "West" }];
 const divisions = [
@@ -242,7 +243,7 @@ const DivisionList = ({ division }) => (
   <div>
     <h5>{division.name}</h5>
     <ul>
-      {division.teams.map(team => (
+      {sortBy(division.teams, ["city", "nickname"]).map(team => (
         <li key={team.id}>
           <TeamItem team={team} />
         </li>
