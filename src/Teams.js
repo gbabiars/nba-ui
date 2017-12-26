@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import sortBy from "lodash/sortBy";
+import "./Teams.css";
 
 const conferences = [{ id: "1", name: "East" }, { id: "2", name: "West" }];
 const divisions = [
@@ -237,28 +238,28 @@ const conferencesWithDivisions = conferences.map(conference => {
   };
 });
 
-const TeamItem = ({ team }) => <div>{`${team.city} ${team.nickname}`}</div>;
+const Team = ({ team }) => <div>{`${team.city} ${team.nickname}`}</div>;
 
-const DivisionList = ({ division }) => (
+const Divisions = ({ division }) => (
   <div>
-    <h5>{division.name}</h5>
+    <h4 class="divisions__header">{division.name}</h4>
     <ul>
       {sortBy(division.teams, ["city", "nickname"]).map(team => (
-        <li key={team.id}>
-          <TeamItem team={team} />
+        <li key={team.id} className="divisions__item">
+          <Team team={team} />
         </li>
       ))}
     </ul>
   </div>
 );
 
-const ConferenceList = ({ conference }) => (
+const Conferences = ({ conference }) => (
   <div>
-    <h4>{conference.name}</h4>
+    <h3 class="conferences__header">{conference.name}</h3>
     <ul>
       {conference.divisions.map(division => (
         <li key={division.id}>
-          <DivisionList division={division} />
+          <Divisions division={division} />
         </li>
       ))}
     </ul>
@@ -268,12 +269,12 @@ const ConferenceList = ({ conference }) => (
 class Teams extends Component {
   render() {
     return (
-      <div>
-        <h1>Teams</h1>
+      <div className="teams">
+        <h1 className="teams__header">Teams</h1>
         <ul>
           {conferencesWithDivisions.map(conference => (
             <li key={conference.id}>
-              <ConferenceList conference={conference} />{" "}
+              <Conferences conference={conference} />
             </li>
           ))}
         </ul>

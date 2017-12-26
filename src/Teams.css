@@ -1,0 +1,22 @@
+.teams__header {
+  padding: 10px;
+}
+
+.conferences__header {
+  padding: 10px;
+  background-color: #666666;
+  color: #ffffff;
+}
+
+.divisions__header {
+  padding: 10px;
+  background-color: #cccccc;
+}
+
+.divisions__item {
+  padding: 10px 10px 0;
+}
+
+.divisions__item:last-of-type {
+  padding-bottom: 10px;
+}
