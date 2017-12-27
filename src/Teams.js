@@ -242,7 +242,7 @@ const Team = ({ team }) => <div>{`${team.city} ${team.nickname}`}</div>;
 
 const Divisions = ({ division }) => (
   <div>
-    <h4 class="divisions__header">{division.name}</h4>
+    <h4 className="divisions__header">{division.name}</h4>
     <ul>
       {sortBy(division.teams, ["city", "nickname"]).map(team => (
         <li key={team.id} className="divisions__item">
@@ -255,7 +255,7 @@ const Divisions = ({ division }) => (
 
 const Conferences = ({ conference }) => (
   <div>
-    <h3 class="conferences__header">{conference.name}</h3>
+    <h3 className="conferences__header">{conference.name}</h3>
     <ul>
       {conference.divisions.map(division => (
         <li key={division.id}>
