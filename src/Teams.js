@@ -225,6 +225,8 @@ const teams = [
   }
 ];
 
+const teamsHash = teams.reduce((hash, team) => ({ ...hash, [team.id]: team }));
+
 const divisionsWithTeams = divisions.map(division => {
   return {
     ...division,
@@ -267,6 +269,28 @@ const Conference = ({ conference, match }) => (
   </div>
 );
 
+const TeamsIndex = ({ conferences, match }) => (
+  <div>
+    <h1 className="teams__header">Teams</h1>
+    <ul>
+      {conferencesWithDivisions.map(conference => (
+        <li key={conference.id}>
+          <Conference conference={conference} match={match} />
+        </li>
+      ))}
+    </ul>
+  </div>
+);
+
+const TeamsDetail = ({ team }) => {
+  return (
+    <div>
+      <h3>{team.city}</h3>
+      <h2>{team.nickname}</h2>
+    </div>
+  );
+};
+
 class Teams extends Component {
   render() {
     const { match } = this.props;
@@ -276,22 +300,13 @@ class Teams extends Component {
         <Route
           exact
           path={match.url}
-          render={() => (
-            <div>
-              <h1 className="teams__header">Teams</h1>
-              <ul>
-                {conferencesWithDivisions.map(conference => (
-                  <li key={conference.id}>
-                    <Conference conference={conference} match={match} />
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
+          render={() => <TeamsIndex conferences={conferences} match={match} />}
         />
         <Route
           path={`${match.url}/:teamId`}
-          render={match => <div>Detail</div>}
+          render={({ match }) => (
+            <TeamsDetail team={teamsHash[match.params.teamId]} />
+          )}
         />
       </div>
     );
