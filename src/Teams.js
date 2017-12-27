@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Route, Link } from "react-router-dom";
 import sortBy from "lodash/sortBy";
 import "./Teams.css";
 
@@ -238,28 +239,28 @@ const conferencesWithDivisions = conferences.map(conference => {
   };
 });
 
-const Team = ({ team }) => <div>{`${team.city} ${team.nickname}`}</div>;
-
-const Divisions = ({ division }) => (
+const Division = ({ division, match }) => (
   <div>
-    <h4 className="divisions__header">{division.name}</h4>
+    <h4 className="division__header">{division.name}</h4>
     <ul>
       {sortBy(division.teams, ["city", "nickname"]).map(team => (
-        <li key={team.id} className="divisions__item">
-          <Team team={team} />
+        <li key={team.id} className="division__item">
+          <Link to={`${match.url}/${team.id}`} className="division__link">
+            {`${team.city} ${team.nickname}`}
+          </Link>
         </li>
       ))}
     </ul>
   </div>
 );
 
-const Conferences = ({ conference }) => (
+const Conference = ({ conference, match }) => (
   <div>
-    <h3 className="conferences__header">{conference.name}</h3>
+    <h3 className="conference__header">{conference.name}</h3>
     <ul>
       {conference.divisions.map(division => (
         <li key={division.id}>
-          <Divisions division={division} />
+          <Division division={division} match={match} />
         </li>
       ))}
     </ul>
@@ -268,16 +269,30 @@ const Conferences = ({ conference }) => (
 
 class Teams extends Component {
   render() {
+    const { match } = this.props;
+
     return (
-      <div className="teams">
-        <h1 className="teams__header">Teams</h1>
-        <ul>
-          {conferencesWithDivisions.map(conference => (
-            <li key={conference.id}>
-              <Conferences conference={conference} />
-            </li>
-          ))}
-        </ul>
+      <div>
+        <Route
+          exact
+          path={match.url}
+          render={() => (
+            <div>
+              <h1 className="teams__header">Teams</h1>
+              <ul>
+                {conferencesWithDivisions.map(conference => (
+                  <li key={conference.id}>
+                    <Conference conference={conference} match={match} />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        />
+        <Route
+          path={`${match.url}/:teamId`}
+          render={match => <div>Detail</div>}
+        />
       </div>
     );
   }
