@@ -285,8 +285,17 @@ const TeamsIndex = ({ conferences, match }) => (
 const TeamsDetail = ({ team }) => {
   return (
     <div>
-      <h3>{team.city}</h3>
-      <h2>{team.nickname}</h2>
+      <div className="teams-detail__header">
+        <img
+          src={`//cdn.nba.net/assets/logos/teams/secondary/web/${team.id}.svg`}
+          alt=""
+          className="teams-detail__logo"
+        />
+        <div>
+          <h3>{team.city}</h3>
+          <h2>{team.nickname}</h2>
+        </div>
+      </div>
     </div>
   );
 };

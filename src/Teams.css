@@ -28,3 +28,14 @@
 .division__link:not(:hover) {
   text-decoration: none;
 }
+
+.teams-detail__header {
+  display: flex;
+  align-items: center;
+}
+
+.teams-detail__logo {
+  display: block;
+  height: 100px;
+  width: 100px;
+}
