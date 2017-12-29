@@ -1,9 +1,43 @@
 import React from "react";
+import { graphql } from "react-apollo";
+import gql from "graphql-tag";
+import sortBy from "lodash/sortBy";
 import { teams } from "./data";
 
 const teamsHash = teams.reduce((hash, team) => ({ ...hash, [team.id]: team }));
 
-const TeamsDetail = ({ match }) => {
+const rosterQuery = gql`
+  query Roster($teamId: String!) {
+    team(id: $teamId) {
+      roster {
+        id
+        name
+        number
+      }
+    }
+  }
+`;
+
+const Roster = ({ data }) => {
+  if (data.loading) {
+    return <div />;
+  }
+
+  return (
+    <div>
+      <h4 className="roster__header">Roster</h4>
+      <ul>
+        {sortBy(data.team.roster, ["name"]).map(player => (
+          <li key={player.id} className="roster__item">
+            {`#${player.number} ${player.name}`}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+const TeamsDetail = ({ match, data }) => {
   const team = teamsHash[match.params.teamId];
   return (
     <div>
@@ -18,8 +52,15 @@ const TeamsDetail = ({ match }) => {
           <h2>{team.nickname}</h2>
         </div>
       </div>
+      <Roster data={data} />
     </div>
   );
 };
 
-export default TeamsDetail;
+export default graphql(rosterQuery, {
+  options: ({ match }) => ({
+    variables: {
+      teamId: match.params.teamId
+    }
+  })
+})(TeamsDetail);

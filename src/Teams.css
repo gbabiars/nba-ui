@@ -39,3 +39,12 @@
   height: 100px;
   width: 100px;
 }
+
+.roster__header {
+  padding: 10px;
+  background-color: #cccccc;
+}
+
+.roster__item {
+  padding: 10px 10px 0;
+}
